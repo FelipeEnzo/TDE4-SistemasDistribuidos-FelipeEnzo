@@ -1,0 +1,6 @@
+<?php
+return [
+    ['host' => 'localhost', 'port' => 8001],
+    ['host' => 'localhost', 'port' => 8002],
+    ['host' => 'localhost', 'port' => 8003],
+];
