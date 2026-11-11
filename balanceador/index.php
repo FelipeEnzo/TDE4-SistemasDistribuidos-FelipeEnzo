@@ -12,7 +12,10 @@ file_put_contents($contador_caminho, $contador);
 
 echo "Requisição número: {$contador}<br>";
 
-$requisicao = curl_init("http://{$lista[0]['host']}:{$lista[0]['port']}/");
+$indice = $contador % count($lista);
+$servidor = $lista[$indice];
+
+$requisicao = curl_init("http://{$servidor['host']}:{$servidor['port']}/");
 curl_setopt($requisicao, CURLOPT_RETURNTRANSFER, true);
 $resposta = curl_exec($requisicao);
 curl_close($requisicao);
