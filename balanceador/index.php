@@ -1,18 +1,21 @@
 <?php
 $lista = require __DIR__ . "/config.php";
-foreach ($lista as $servidor) {
-    $url = "http://{$servidor['host']}:{$servidor['port']}/health.php";
-    $ch = curl_init($url);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    $response = curl_exec($ch);
-    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-
-    curl_close($ch);
-
-    if ($httpCode === 200 && $response === 'OK') {
-        echo "Servidor {$servidor['host']}:{$servidor['port']} está saudável.<br>";
-    } else {
-        echo "Servidor {$servidor['host']}:{$servidor['port']} não está saudável.<br>";
-    }
+$contador_caminho = __DIR__ . "/state/contador.txt";
+if (file_exists($contador_caminho)) {
+    $contador = (int)file_get_contents($contador_caminho);
+} else {
+    $contador = 0;
 }
+
+$contador++;
+file_put_contents($contador_caminho, $contador);
+
+echo "Requisição número: {$contador}<br>";
+
+$requisicao = curl_init("http://{$lista[0]['host']}:{$lista[0]['port']}/");
+curl_setopt($requisicao, CURLOPT_RETURNTRANSFER, true);
+$resposta = curl_exec($requisicao);
+curl_close($requisicao);
+echo $resposta;
+
 // php -S localhost:8000 -t balanceador
