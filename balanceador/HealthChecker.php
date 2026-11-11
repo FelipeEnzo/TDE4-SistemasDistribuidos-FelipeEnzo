@@ -13,3 +13,4 @@ function checkHealth($servidor) {
 
 }
 // php -S localhost:8000 -t balanceador
+// curl http://localhost:8000
